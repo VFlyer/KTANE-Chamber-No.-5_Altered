@@ -206,18 +206,26 @@ public class ChamberNoFive : MonoBehaviour {
         string DisplayTimerNumber = string.Format("{0:00.00}", Math.Round(TimerNumber, 2));
         Timer.text = "0:" + DisplayTimerNumber;
         if (TimerNumber <= 30f - 21.89f && !YouCantHide[0]) {
+          SoundIThink.StopSound();
+          SoundIThink = null;
           SoundIThink = Audio.PlaySoundAtTransformWithRef("youcanthide1.2x", transform);
           YouCantHide[0] = true;
         }
         if (TimerNumber <= 30f - 21.89f - 2.28f && !YouCantHide[1]) {
+          SoundIThink.StopSound();
+          SoundIThink = null;
           SoundIThink = Audio.PlaySoundAtTransformWithRef("youcanthide1.3x", transform);
           YouCantHide[1] = true;
         }
         if (TimerNumber <= 30f - 21.89f - 2.28f - 2.088f && !YouCantHide[2]) {
+          SoundIThink.StopSound();
+          SoundIThink = null;
           SoundIThink = Audio.PlaySoundAtTransformWithRef("youcanthide1.4x", transform);
           YouCantHide[2] = true;
         }
         if (TimerNumber <= 30f - 21.89f - 2.28f - 2.088f - 1.968f  && !YouCantHide[3]) {
+          SoundIThink.StopSound();
+          SoundIThink = null;
           SoundIThink = Audio.PlaySoundAtTransformWithRef("youcanthide1.4x", transform);
           YouCantHide[3] = true;
         }
@@ -239,6 +247,12 @@ public class ChamberNoFive : MonoBehaviour {
           for (int i = 0; i < YouCantHide.Length; i++) {
             YouCantHide[i] = false;
           }
+        }
+      }
+      else {
+        while (SoundIThink != null) {
+          SoundIThink.StopSound();
+          SoundIThink = null;
         }
       }
       if (StageTwo) {
