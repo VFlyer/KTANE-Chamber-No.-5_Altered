@@ -344,7 +344,10 @@ public class ChamberNoFive : MonoBehaviour {
    IEnumerator ProcessTwitchCommand (string Command) {
       Command = Command.Trim().ToUpper();
       yield return null;
-      if (!StageTwo) {
+      if (Command == "START" & !StageTwo) {
+         StartButton.OnInteract();
+      }
+      else if (!StageTwo) {
          for (int i = 0; i < 4; i++) {
             if (Command == LetterOptions[i].text) {
                LetterButtons[i].OnInteract();
