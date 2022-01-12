@@ -85,8 +85,9 @@ public class ChamberNoFive : MonoBehaviour {
    void Activate () {
       if (TwitchPlaysActive) {
          //Sound = false;
-         TPNumbers.Shuffle();
+         TPNumbers = TPNumbers.Shuffle();
          TimerNumber = 50f;
+         Timer.text = "0:50.00";
          for (int i = 0; i < 7; i++) {
             InstrumentTexts[i].text = TPNumbers[i].ToString();
          }
@@ -271,6 +272,7 @@ public class ChamberNoFive : MonoBehaviour {
             YouCantHide[3] = true;
          }
          if (TimerNumber < .01f) {
+            StopAllCoroutines();
             while (SoundIThink != null) {
                SoundIThink.StopSound();
                SoundIThink = null;
@@ -280,6 +282,7 @@ public class ChamberNoFive : MonoBehaviour {
             for (int i = 0; i < 4; i++) {
                LetterOptions[i].text = "";
             }
+            Screen.GetComponent<MeshRenderer>().material = Static[10];
             Words.text = "Start";
             for (int i = 0; i < 7; i++) {
                Used[i] = false;
@@ -338,7 +341,7 @@ public class ChamberNoFive : MonoBehaviour {
    }
 
 #pragma warning disable 414
-   private readonly string TwitchHelpMessage = @"Use !{0} X to press that letter. Use !{0} # to press the instrument with that number.";
+   private readonly string TwitchHelpMessage = @"Use !{0} start to start. Use !{0} X to press that letter. Use !{0} # to press the instrument with that number. On TP the timer is extended to 50 seconds.";
 #pragma warning restore 414
 
    IEnumerator ProcessTwitchCommand (string Command) {
@@ -385,7 +388,7 @@ public class ChamberNoFive : MonoBehaviour {
                LetterButtons[i].OnInteract();
             }
          }
-         yield return true;
+         yield return null;
       }
       while (!Transformed) {
          yield return true;
