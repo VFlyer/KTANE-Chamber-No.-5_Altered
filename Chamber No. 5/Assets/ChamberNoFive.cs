@@ -294,6 +294,8 @@ public class ChamberNoFive : MonoBehaviour {
             for (int i = 0; i < YouCantHide.Length; i++) {
                YouCantHide[i] = false;
             }
+            if (!CanPress)
+               CanPress = true;
          }
       }
       else {
