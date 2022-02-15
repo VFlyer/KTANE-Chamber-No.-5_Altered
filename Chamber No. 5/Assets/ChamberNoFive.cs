@@ -47,7 +47,7 @@ public class ChamberNoFive : MonoBehaviour {
    bool StageTwo;
    bool Sound = true;
    bool CanPress = true;
-   bool Transformed;
+   bool AutosolveWait;
 
    Vector3[] BadTrumpets = new Vector3[7];
    Vector3[] Rotationsoftrumpet = new Vector3[7];
@@ -212,7 +212,7 @@ public class ChamberNoFive : MonoBehaviour {
          yield return null;
       }
       yield return new WaitForSeconds(1f);
-      Transformed = true;
+      AutosolveWait = false;
    }
 
    void WordChoice () {
@@ -221,6 +221,7 @@ public class ChamberNoFive : MonoBehaviour {
       Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
       if (Used[0] && Used[1] && Used[2] && Used[3] && Used[4] && Used[5] && Used[6]) {
          Active = false;
+         AutosolveWait = true;
          StartCoroutine(Animation());
          StartCoroutine(Blacken());
          return;
@@ -380,11 +381,11 @@ public class ChamberNoFive : MonoBehaviour {
    }
 
    IEnumerator TwitchHandleForcedSolve () {
-      if (!Active) {
+      if (!StageTwo && !Active) {
          StartButton.OnInteract();
          yield return new WaitForSeconds(.1f);
       }
-      while (!StageTwo) {
+      while (!StageTwo && !AutosolveWait) {
          for (int i = 0; i < 4; i++) {
             if (i == Buttons[0]) {
                LetterButtons[i].OnInteract();
@@ -392,7 +393,7 @@ public class ChamberNoFive : MonoBehaviour {
          }
          yield return null;
       }
-      while (!Transformed) {
+      while (AutosolveWait) {
          yield return true;
       }
       TheTrumpet.OnInteract();
