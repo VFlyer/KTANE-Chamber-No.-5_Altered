@@ -205,13 +205,15 @@ public class ChamberNoFive : MonoBehaviour {
          SoundIThink.StopSound();
          SoundIThink = null;
       }
-      float fadeOutTime = 2.0f;
-      Material originalMat = Background.GetComponent<Renderer>().material;
+      float fadeOutTime = 0.5f;
+      Renderer backRend = Background.GetComponent<Renderer>();
+      Material originalMat = new Material(backRend.material);
+      Material newMat = new Material(Static[10]);
       for (float t = 0.01f; t < fadeOutTime; t += Time.deltaTime) {
-         Background.GetComponent<Renderer>().material.Lerp(originalMat, Static[10], Mathf.Min(1, t / fadeOutTime));
+         backRend.material.Lerp(originalMat, newMat, t / fadeOutTime);
          yield return null;
       }
-      yield return new WaitForSeconds(1f);
+      yield return new WaitForSeconds(2.5f);
       AutosolveWait = false;
    }
 
