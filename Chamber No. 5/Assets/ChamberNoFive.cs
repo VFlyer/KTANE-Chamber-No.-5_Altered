@@ -299,7 +299,7 @@ public class ChamberNoFive : MonoBehaviour
         }
         Used[Dumbass] = true;
         if (_twitchMode)
-            tpAPI["ircConnectionSendMessage"] = "Module " + GetModuleCode() + " (Chamber No. 5) has screen " + Words.text.ToUpperInvariant() + " with letters " + LetterOptions[Buttons[0]].text + " " + LetterOptions[Buttons[1]].text + " " + LetterOptions[Buttons[2]].text + " " + LetterOptions[Buttons[3]].text + ".";
+            tpAPI["ircConnectionSendMessage"] = "Module " + GetModuleCode() + " (Chamber No. 5) has screen " + Words.text.ToUpperInvariant() + " with letters " + LetterOptions[0].text + " " + LetterOptions[1].text + " " + LetterOptions[2].text + " " + LetterOptions[3].text + ".";
     }
 
     void Update()
