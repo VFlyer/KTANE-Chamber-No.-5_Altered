@@ -158,7 +158,7 @@ public class ChamberNoFive : MonoBehaviour
         }
         if (Sound)
         {
-            SoundIThink = Audio.PlaySoundAtTransformWithRef("ALittleBit", transform);
+            SoundIThink = Audio.PlaySoundAtTransformWithRef("BGM_TE4", transform);
         }
         StartButton.gameObject.SetActive(false);
         Active = true;
@@ -309,6 +309,7 @@ public class ChamberNoFive : MonoBehaviour
             TimerNumber -= Time.deltaTime;
             string DisplayTimerNumber = string.Format("{0:00.00}", Math.Round(TimerNumber, 2));
             Timer.text = "0:" + DisplayTimerNumber;
+            /*
             if (TimerNumber <= 30f - 21.89f && !YouCantHide[0] && Sound)
             {
                 SoundIThink.StopSound();
@@ -336,6 +337,14 @@ public class ChamberNoFive : MonoBehaviour
                 SoundIThink = null;
                 SoundIThink = Audio.PlaySoundAtTransformWithRef("youcanthide1.4x", transform);
                 YouCantHide[3] = true;
+            }
+            */
+            if (TimerNumber <= 30f - 21.89f && !YouCantHide[0] && Sound)
+            {
+                SoundIThink.StopSound();
+                SoundIThink = null;
+                SoundIThink = Audio.PlaySoundAtTransformWithRef("BGM_TS00", transform);
+                YouCantHide[0] = true;
             }
             if (TimerNumber < .01f)
             {
