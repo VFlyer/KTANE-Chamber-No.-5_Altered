@@ -48,7 +48,7 @@ public class ChamberNoFive : MonoBehaviour
     bool StageTwo;
     bool Sound = true;
     bool CanPress = true;
-    bool AutosolveWait;
+    bool AutosolveWait, autosolving, floodChatAnytime;
 
     Vector3[] BadTrumpets = new Vector3[7];
     Vector3[] Rotationsoftrumpet = new Vector3[7];
@@ -88,6 +88,7 @@ public class ChamberNoFive : MonoBehaviour
             modSettings.Settings = localSettings;
             playAlternativeTracks = localSettings.PlayAlternativeTracks;
             Sound = localSettings.PlaySounds;
+            floodChatAnytime = localSettings.IDoNotCareAboutTwitchPlays;
         }
         catch
         {
@@ -313,7 +314,13 @@ public class ChamberNoFive : MonoBehaviour
         }
         Used[Dumbass] = true;
         if (_twitchMode)
-            tpAPI["ircConnectionSendMessage"] = "Module " + GetModuleCode() + " (Chamber No. 5) has screen " + Words.text.ToUpperInvariant() + " with letters " + LetterOptions[0].text + " " + LetterOptions[1].text + " " + LetterOptions[2].text + " " + LetterOptions[3].text + ".";
+            TrySendTPMessage("Module " + GetModuleCode() + " (Chamber No. 5) has screen " + Words.text.ToUpperInvariant() + " with letters " + LetterOptions[0].text + " " + LetterOptions[1].text + " " + LetterOptions[2].text + " " + LetterOptions[3].text + ".");
+    }
+
+    void TrySendTPMessage(string message)
+    {
+        if (_twitchMode && (!autosolving || floodChatAnytime))
+            tpAPI["ircConnectionSendMessage"] = message;
     }
 
     void Update()
@@ -447,6 +454,7 @@ public class ChamberNoFive : MonoBehaviour
     {
         public bool PlayAlternativeTracks = false;
         public bool PlaySounds = true;
+        public bool IDoNotCareAboutTwitchPlays = false;
     }
 
     private string GetModuleCode()
@@ -514,6 +522,7 @@ public class ChamberNoFive : MonoBehaviour
 
     IEnumerator TwitchHandleForcedSolve()
     {
+        autosolving = true;
         if (!StageTwo && !Active)
         {
             StartButton.OnInteract();
